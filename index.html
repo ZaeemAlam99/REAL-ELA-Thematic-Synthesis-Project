@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Affects of Innate Savagery in Human Nature</title>
+    <title>Effects of Innate Savagery in Human Nature</title>
     <style>
         body {
             font-family: 'Spectral', serif;
@@ -67,9 +67,11 @@
         }
         .option img {
             max-width: 100%;
-    height: 300px; /* Set a smaller height for the image */
-    object-fit: cover; /* Maintain aspect ratio and cover the container */
-
+            height: 300px; /* Set a smaller height for the image */
+            object-fit: cover; /* Maintain aspect ratio and cover the container */
+        }
+        .hidden {
+            display: none;
         }
     </style>
 </head>
@@ -78,8 +80,26 @@
         <h1>Effects of Innate Savagery in Human Nature</h1>
     </header>
     <div class="container">
+        <h2>Intro:</h2>
         <p>Are humans inherently inclined towards violence and destruction? Deep within us lies an innate urge within, a remnant of our primitive ancestry, waiting to be awakened. Innate savagery is the raw, untamed aspect of humanity, often concealed beneath a veil of civilization, social norms, and morality. It represents the instinctual drive for survival, an urge for dominance, and a capacity for violence that lurks within all of us, ready to pounce in times of crisis or chaos. The exploration of the effects of innate savagery on our actions reveal the importance of the social norms that keep humanity civilized. While the concept of innate savagery suggests that humans have a tendency to make morally unethical decisions, our individual choices and backgrounds also significantly influence our behavior. This nuanced relationship between social norms and primal instincts illustrates the complexity of human nature.</p>
-        <p>Select a character:</p>
+    </div>
+
+    <div class="container" id="bookSelection">
+        <h2>Choose Your Book...</h2>
+        <div class="options">
+            <div class="option" onclick="selectBook('lotf')">
+                <h3>Lord of the Flies</h3>
+                <img src="lotf2.jpg" alt="Lord of the Flies">
+            </div>
+            <div class="option" onclick="selectBook('sge')">
+                <h3>The School for Good and Evil</h3>
+                <img src="schoolforgoodandevil.jpg" alt="The School for Good and Evil">
+            </div>
+        </div>
+    </div>
+
+    <div class="container hidden" id="characterSelection">
+        <h2>Choose Your Character...</h2>
         <select id="characterSelect">
             <option value="jack">Jack (Lord of the Flies)</option>
             <option value="agatha">Agatha (The School for Good and Evil)</option>
@@ -89,52 +109,37 @@
         <div id="story"></div>
     </div>
 
-    <div class="container">
-        <h2>Choose Your Story...</h2>
-        <div class="options">
-            <div class="option">
-                <h3>Lord of the Flies</h3>
-                <img src="lotf2.jpg" alt="Lord of the Flies">
-            </div>
-            <div class="option">
-                <h3>The School for Good and Evil</h3>
-                <img src="schoolforgoodandevil.jpg" alt="The School for Good and Evil">
-            </div>
-        </div>
-        <h3>OR</h3>
-        <div class="option">
-            <h3>Read about an example of innate savagery</h3>
-            <a href="https://www.youtube.com/watch?v=mWRsgZuwf_8"><img src="demons.jpg" alt="Demons by Imagine Dragons"></a>
-        </div>
-    </div>
-
     <script>
-        const storyPoints = [
-            {
-                character: "jack",
-                text: "You find yourself stranded on a deserted island with a group of other boys. What do you do?",
-                choices: [
-                    { text: "Try to establish order and rules", result: "You manage to establish some semblance of order, but tensions rise as resources dwindle." },
-                    { text: "Embrace your primal instincts and hunt for food", result: "You become consumed by the hunt, losing touch with your humanity." }
-                ]
-            },
-            {
-                character: "agatha",
-                text: "You are accepted into the School for Good and Evil. What path do you choose?",
-                choices: [
-                    { text: "Pursue the path of Good and study hard", result: "You excel in your studies and become a shining example of Good." },
-                    { text: "Embrace the allure of Evil and seek power", result: "You become consumed by your desire for power, losing sight of your original intentions." }
-                ]
-            },
-            {
-                character: "narrator",
-                text: "You are confronted by your inner demons. How do you respond?",
-                choices: [
-                    { text: "Face your demons and seek redemption", result: "You confront your past and find peace within yourself." },
-                    { text: "Embrace your demons and let them consume you", result: "Your inner demons take control, leading you down a path of destruction." }
-                ]
-            }
-        ];
+        let selectedBook = '';
+
+        function selectBook(book) {
+            selectedBook = book;
+            document.getElementById('bookSelection').classList.add('hidden');
+            document.getElementById('characterSelection').classList.remove('hidden');
+        }
+
+        const storyPoints = {
+            'lotf': [
+                {
+                    character: "jack",
+                    text: "You find yourself stranded on a deserted island with a group of other boys. What do you do?",
+                    choices: [
+                        { text: "Try to establish order and rules", result: "You manage to establish some semblance of order, but tensions rise as resources dwindle." },
+                        { text: "Embrace your primal instincts and hunt for food", result: "You become consumed by the hunt, losing touch with your humanity." }
+                    ]
+                }
+            ],
+            'sge': [
+                {
+                    character: "agatha",
+                    text: "You are accepted into the School for Good and Evil. What path do you choose?",
+                    choices: [
+                        { text: "Pursue the path of Good and study hard", result: "You excel in your studies and become a shining example of Good." },
+                        { text: "Embrace the allure of Evil and seek power", result: "You become consumed by your desire for power, losing sight of your original intentions." }
+                    ]
+                }
+            ]
+        };
 
         let currentStoryPointIndex = -1;
 
@@ -145,7 +150,7 @@
             const story = document.getElementById("story");
             story.innerHTML = "";
 
-            const characterStoryPoints = storyPoints.filter(point => point.character === selectedCharacter);
+            const characterStoryPoints = storyPoints[selectedBook].filter(point => point.character === selectedCharacter);
             currentStoryPointIndex = 0;
             displayStoryPoint(characterStoryPoints[currentStoryPointIndex]);
         }
@@ -162,17 +167,50 @@
         }
 
         function makeChoice(choice) {
-            const story = document.getElementById("story");
-            const characterStoryPoints = storyPoints.filter(point => point.character === characterSelect.value);
-            const result = characterStoryPoints[currentStoryPointIndex].choices.find(c => c.text === choice.text).result;
-            story.innerHTML += `<p>${result}</p>`;
-            currentStoryPointIndex++;
-            if (currentStoryPointIndex < characterStoryPoints.length) {
-                displayStoryPoint(characterStoryPoints[currentStoryPointIndex]);
-            } else {
-                story.innerHTML += "<p>Game Over</p>";
-            }
+    const story = document.getElementById("story");
+    const characterStoryPoints = storyPoints[selectedBook].filter(point => point.character === characterSelect.value);
+    const result = characterStoryPoints[currentStoryPointIndex].choices.find(c => c.text === choice.text).result;
+    story.innerHTML += `<p>${result}</p>`;
+    currentStoryPointIndex++;
+    if (currentStoryPointIndex < characterStoryPoints.length) {
+        displayStoryPoint(characterStoryPoints[currentStoryPointIndex]);
+    } else {
+        story.innerHTML += "<p>Game Over</p>";
+        const buttonsDiv = document.createElement("div");
+        buttonsDiv.classList.add("options");
+        const homeButton = document.createElement("button");
+        homeButton.textContent = "Home Screen";
+        homeButton.onclick = () => {
+            selectedBook = '';
+            document.getElementById('bookSelection').classList.remove('hidden');
+            document.getElementById('characterSelection').classList.add('hidden');
+            story.innerHTML = '';
+        };
+        buttonsDiv.appendChild(homeButton);
+        if (selectedBook === 'lotf') {
+            const sgeButton = document.createElement("button");
+            sgeButton.textContent = "The School for Good and Evil";
+            sgeButton.onclick = () => {
+                selectedBook = 'sge';
+                document.getElementById('bookSelection').classList.add('hidden');
+                document.getElementById('characterSelection').classList.remove('hidden');
+                story.innerHTML = '';
+            };
+            buttonsDiv.appendChild(sgeButton);
+        } else if (selectedBook === 'sge') {
+            const lotfButton = document.createElement("button");
+            lotfButton.textContent = "Lord of the Flies";
+            lotfButton.onclick = () => {
+                selectedBook = 'lotf';
+                document.getElementById('bookSelection').classList.add('hidden');
+                document.getElementById('characterSelection').classList.remove('hidden');
+                story.innerHTML = '';
+            };
+            buttonsDiv.appendChild(lotfButton);
         }
+        story.appendChild(buttonsDiv);
+    }
+}
     </script>
 </body>
 </html>
