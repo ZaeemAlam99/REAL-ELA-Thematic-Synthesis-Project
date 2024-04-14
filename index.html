@@ -3,37 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Innate Savagery Game</title>
+    <title>Affects of Innate Savagery in Human Nature</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Spectral', serif;
             text-align: center;
-            background-color: #1a1a1a;
-            color: white;
+            background-color: #000000; /* Black background */
+            color: #ff0000; /* Red text color */
             margin: 0;
             padding: 0;
+        }
+        header {
+            background-color: #8b0000; /* Dark red bar */
+            padding: 30px 0;
+        }
+        header h1 {
+            margin: 0;
+            color: white; /* White text color for the title */
+            
         }
         .container {
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            height: 80vh; /* Adjusted height for the content */
             flex-direction: column;
         }
-        h1 {
-            margin-top: 0;
+        p {
+            max-width: 600px; /* Limit text width for better readability */
+            margin: 0 auto 20px; /* Center and add bottom margin */
         }
         button {
             padding: 10px 20px;
             font-size: 18px;
-            background-color: #3399ff;
+            background-color: #8b0000; /* Dark red button */
             color: white;
             border: none;
             cursor: pointer;
             margin-top: 20px;
         }
         button:hover {
-            background-color: #1a8cff;
+            background-color: #ff0000; /* Bright red hover */
         }
         select {
             padding: 8px;
@@ -49,9 +59,11 @@
     </style>
 </head>
 <body>
+    <header>
+        <h1>Affects of Innate Savagery in Human Nature</h1>
+    </header>
     <div class="container">
-        <h1>Innate Savagery Game</h1>
-        <p>Are humans inherently inclined towards violence and destruction? A deep primal force rests within us all, representing our primitive ancestry, waiting to be awakened. Innate savagery is the raw, untamed aspect of humanity, often concealed beneath a veil of civilization, social norms, and morality. It represents the instinctual drive for survival, an urge for dominance, and a capacity for violence that lurks within all of us, ready to pounce in times of crisis or chaos. The exploration of the effects of innate savagery on our actions reveal the importance of the social norms that keep humanity civilized. While the concept of innate savagery suggests that humans have a tendency to make morally unethical decisions, our individual choices and backgrounds also significantly influence our behavior. This nuanced relationship between social norms and primal instincts illustrates the complexity of human nature.</p>
+        <p>Are humans inherently inclined towards violence and destruction? Deep within us lies an innate urge within, a remnant of our primitive ancestry, waiting to be awakened. Innate savagery is the raw, untamed aspect of humanity, often concealed beneath a veil of civilization, social norms, and morality. It represents the instinctual drive for survival, an urge for dominance, and a capacity for violence that lurks within all of us, ready to pounce in times of crisis or chaos. The exploration of the effects of innate savagery on our actions reveal the importance of the social norms that keep humanity civilized. While the concept of innate savagery suggests that humans have a tendency to make morally unethical decisions, our individual choices and backgrounds also significantly influence our behavior. This nuanced relationship between social norms and primal instincts illustrates the complexity of human nature.</p>
         <p>Select a character:</p>
         <select id="characterSelect">
             <option value="jack">Jack (Lord of the Flies)</option>
