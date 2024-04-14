@@ -99,6 +99,25 @@
         .tab.active {
             background-color: #ff0000; /* Bright red color for the active tab */
         }
+
+        .characterImages {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .characterImage {
+            margin: 0 10px;
+            cursor: pointer;
+        }
+
+        .characterImage img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 2px solid #ff0000; /* Red border for character images */
+        }
     </style>
 </head>
 <body>
@@ -131,138 +150,147 @@
     </div>
 
     <div class="container" id="characterSelection">
-        <p>Select a character:</p>
-        <select id="characterSelect">
-            <option value="jack">Jack (Lord of the Flies)</option>
-            <option value="agatha">Agatha (The School for Good and Evil)</option>
-            <option value="narrator">Narrator (Demons)</option>
-        </select>
-        <button onclick="startGame()">Start Game</button>
-        <div id="story"></div>
+        <div id="quizQuestion"></div>
+        <div id="quizAnswers"></div>
+    </div>
+
+    <div class="container" id="characterAnalysis" style="display: none;">
+        <div id="sophieAnalysis" style="display: none;">
+            <h2>Sophie</h2>
+            <p>In contrast to Agatha, Sophie’s character development in <i>The School for Good and Evil</i> reveals that looks can be deceiving when it comes to one’s inner evil. From the start of the book, Sophie is depicted as the epitome of a princess. She is narcissistic about her appearance, longs for a fairy-tale ending, and does “months of good deeds” solely to prove that she’s good  (Chainani 12). However, as the story progresses, Sophie’s true nature begins to unravel, revealing a complex character with ulterior motives, ambition, and desire for power. Sophie’s actions grow manipulative and increasingly selfish, especially after Agatha gets placed in the School for Good while she ends up in the School for Evil. Sophie begins to do anything to tear Agatha and the man of her dreams, Tedros, apart, even going as far as hurting other people and breaking down the schools to achieve her goals. Her switch from superficial acts of kindness to her true evil nature display that inner goodness comes from within and can’t be judged from small acts or external appearances. Sophie’s transformation is a stark contrast to Agatha’s, demonstrating how innate savagery can unfold when one is faced with adversity or temptation.
+            </p>
+            <div class="characterImages">
+                <div class="characterImage" onclick="showAnalysis('sophie')"><img src="sophie.jpeg" alt="Sophie"></div>
+                <div class="characterImage" onclick="showAnalysis('agatha')"><img src="agatha.jpeg" alt="Agatha"></div>
+            </div>
+        </div>
+        <div id="agathaAnalysis" style="display: none;">
+            <h2>Agatha</h2>
+            <p>Throughout <i>The School for Good and Evil</i>, Agatha’s drastic character arc underscores that one’s true nature isn’t defined from outward appearances but by one’s actions. Despite her unconventional preferences, such as tends to like “gloom and doom,” as well as “suffering and unhappiness,” Agatha exhibits genuine compassionate and kindness to her one friend, Sophie (Chainani 82). Agatha repeatedly faces ostracization from the princesses and princes for her differences and nonconformity to the superficial stereotypes of good, such as liking pink, being dumb, and being a bully. Yet Agatha remains true to her kind nature and constantly attempts to free Sophie from the School for Evil, especially since she thinks that Sophie is good and deserves a life of happiness. Nearing the end of the story, Agatha finally recognizes that she has been “beautiful all along” because of her inner goodness regardless of her darker appearance (Chainani 284). Agatha’s character arc  and high moral compass portray that the capacity for goodness or evil resides in one’s choice, rather than their outward characteristics or societal labels.
+            </p>
+            <div class="characterImages">
+                <div class="characterImage" onclick="showAnalysis('sophie')"><img src="sophie.jpeg" alt="Sophie"></div>
+                <div class="characterImage" onclick="showAnalysis('agatha')"><img src="agatha.jpeg" alt="Agatha"></div>
+            </div>
+        </div>
     </div>
 
     <script>
-        function showContent(tabName) {
-            const tabs = document.querySelectorAll('.tab');
-            tabs.forEach(tab => {
-                tab.classList.remove('active');
-            });
-            const selectedTab = document.querySelector('.tab.' + tabName);
-            selectedTab.classList.add('active');
-
-            const content = document.getElementById('content');
-            if (tabName === 'lotf' || tabName === 'schoolforgoodandevil' || tabName === 'demons') {
-                document.getElementById('characterSelection').style.display = 'block';
-                content.innerHTML = ''; // Clear previous content
-            } else {
-                document.getElementById('characterSelection').style.display = 'none';
-                // Add content for Conclusion or other tabs if needed
-                content.innerHTML = ''; // Example: content.innerHTML = '<p>This is the conclusion.</p>';
-            }
-        }
-
-        const storyPoints = [
+        const questions = [
             {
-                character: "jack",
-                text: "You find yourself stranded on a deserted island with a group of other boys. What do you do?",
-                choices: [
-                    { text: "Try to establish order and rules", result: "You manage to establish some semblance of order, but tensions rise as resources dwindle." },
-                    { text: "Embrace your primal instincts and hunt for food", result: "You become consumed by the hunt, losing touch with your humanity." }
+                question: "It's another boring day in your small village. You and your bestie head to the Storybook Shop to pick out a book — what kind of fairytale is calling your name?",
+                answers: [
+                    { text: "Gorgeous princesses and handsome princes in faraway castles.", character: "sophie" },
+                    { text: "Pirates engaging in swashbuckling adventure with lots of fighting.", character: "agatha" },
+                    { text: "Powerful witches with magical potions and mythical creatures.", character: "sophie" },
+                    { text: "Horrifying demons and ogres languishing in putrid swamps.", character: "agatha" }
                 ]
             },
             {
-                character: "agatha",
-                text: "You are accepted into the School for Good and Evil. What path do you choose?",
-                choices: [
-                    { text: "Pursue the path of Good and study hard", result: "You excel in your studies and become a shining example of Good." },
-                    { text: "Embrace the allure of Evil and seek power", result: "You become consumed by your desire for power, losing sight of your original intentions." }
+                question: "You're both dropped into a huge room filled with stunning ballgowns of every colour and piles of shoes and makeup. What do you do?",
+                answers: [
+                    { text: "Try on everything — is this heaven?! You can even pick out gowns for your bestie too!", character: "sophie" },
+                    { text: "Try desperately to find something black or leather. You're definitely not a pastel kinda gal.", character: "agatha" },
+                    { text: "Select the most tasteful of ballgowns for your debut. You know exactly what a princess should wear!", character: "sophie" },
+                    { text: "Stubbornly stay put. You're happy just the way you are, even if your bestie isn't. Plus, something super weird is going on here...", character: "agatha" }
                 ]
             },
             {
-                character: "narrator",
-                text: "You are confronted by your inner demons. How do you respond?",
-                choices: [
-                    { text: "Face your demons and seek redemption", result: "You confront your past and find peace within yourself." },
-                    { text: "Embrace your demons and let them consume you", result: "Your inner demons take control, leading you down a path of destruction." }
+                question: "You're both ushered into a grand hall, where a handsome prince makes his entrance with a fantastical display of agility and bravery. After he defeats his enemies, he throws you a wink and a rose. What do you do next?",
+                answers: [
+                    { text: "Smile sweetly, curtsey and smell your beautiful rose.", character: "sophie" },
+                    { text: "Drop it and roll your eyes. Did someone spray too much ego on this morning?", character: "agatha" },
+                    { text: "Turn it into a poisoned apple and offer it back to him.", character: "sophie" },
+                    { text: "Faint!", character: "agatha" }
+                ]
+            },
+            {
+                question: "Okay, looks like you're not going home anytime soon. You're being enrolled in some sort of magical School — one for Good and Evil. What class are you looking to take first?",
+                answers: [
+                    { text: "Wish fulfilment class — how to take a magical wish and make it come true through strength of will.", character: "sophie" },
+                    { text: "Beautification class — 'A woman’s smile can disarm the most dangerous foe and give her the upper hand.'", character: "agatha" },
+                    { text: "Uglification class — how to reject vanity, embrace repulsiveness and focus on what really matters (power, duh).", character: "sophie" },
+                    { text: "Whichever class will enable you to harness your uniqueness, channel your inner power and and battle others.", character: "agatha" }
+                ]
+            },
+            {
+                question: "Oh no! You've gotten your first fail. Maybe you're not in the right school...but how would you know for sure?",
+                answers: [
+                    { text: "Complain loudly and demand to see the headmaster.", character: "agatha" },
+                    { text: "Appeal to the common sense of your fellow classmates. Surely one of them has to have some?", character: "sophie" },
+                    { text: "Fail? You don't know how to fail, you're perfection incarnate. This must be someone else's mistake.", character: "agatha" },
+                    { text: "Eh, failure is a part of life. You kind of enjoy being bottom of the class, there's no where to go but up.", character: "sophie" }
+                ]
+            },
+            {
+                question: "Okay, now you know something is seriously wrong. Your best friend is missing and everyone else seems to hate you. How do you try to fix it?",
+                answers: [
+                    { text: "Sneak around the rooftops and try to find out what you can — but don't fall! And watch out for gargoyles...", character: "sophie" },
+                    { text: "Explore the mysterious woods for clues, but try to avoid the flowers — they have a taste for blood.", character: "agatha" },
+                    { text: "This school doesn't know what true evil looks like yet. Time to show them yourself! No matter the cost...", character: "agatha" },
+                    { text: "Hide out in your room and refuse to engage. Someone else will fix this for you, surely.", character: "sophie" }
+                ]
+            },
+            {
+                question: "Uh-oh, your snooping has caused the school to plunge into chaos! Good and Evil are clashing and the sides are blurring like never before. You have one final choice to make — what is it?",
+                answers: [
+                    { text: "Punch everything in sight!", character: "agatha" },
+                    { text: "Find and protect your crush at all costs!", character: "sophie" },
+                    { text: "Stick by your best friend and show them that Good or Evil, you're always by their side!", character: "sophie" },
+                    { text: "Face up to your mistakes and undo the damage that you've done!", character: "agatha" }
                 ]
             }
         ];
 
-        let currentStoryPointIndex = -1;
+        let currentQuestionIndex = 0;
+        let quizAnswers = [];
 
-        function startGame() {
-            const characterSelect = document.getElementById("characterSelect");
-            const selectedCharacter = characterSelect.value;
-
-            const story = document.getElementById("story");
-            story.innerHTML = "";
-
-            const characterStoryPoints = storyPoints.filter(point => point.character === selectedCharacter);
-            currentStoryPointIndex = 0;
-            displayStoryPoint(characterStoryPoints[currentStoryPointIndex]);
+        function startQuiz() {
+            currentQuestionIndex = 0;
+            displayQuestion(currentQuestionIndex);
         }
 
-        function displayStoryPoint(point) {
-            const story = document.getElementById("story");
-            story.innerHTML = `<p>${point.text}</p>`;
-            point.choices.forEach(choice => {
-                const button = document.createElement("button");
-                button.textContent = choice.text;
-                button.onclick = () => makeChoice(choice);
-                story.appendChild(button);
-            });
+        function displayQuestion(index) {
+            const questionContainer = document.getElementById("quizQuestion");
+            questionContainer.innerHTML = `
+                <div class="question">${questions[index].question}</div>
+                <div class="answers">
+                    ${questions[index].answers.map((answer, idx) => `
+                        <button class="answer" onclick="selectAnswer('${answer.character}')">${answer.text}</button>
+                    `).join('')}
+                </div>
+            `;
         }
-        function showCharacterAnalysis(character) {
-    let analysis = "";
-    if (character === "agatha") {
-        analysis = "In contrast to Sophie, Agatha’s character development in The School for Good and Evil reveals that looks can be deceiving when it comes to one’s inner evil. Despite her initial portrayal as the epitome of a princess, Sophie's actions gradually reveal her inner turmoil and capacity for manipulation. While she initially strives to prove her goodness through superficial acts of kindness, Sophie's descent into darkness becomes increasingly pronounced as she becomes consumed by jealousy and ambition.";
-    } else if (character === "sophie") {
-        analysis = "Throughout The School for Good and Evil, Sophie’s character development reveals that looks can be deceiving when it comes to one’s inner evil. From the start of the book, Sophie is depicted as the epitome of a princess. She is narcissistic about her appearance, longs for a fairy-tale ending, and does 'months of good deeds' solely to prove that she’s good. However, as the story progresses, Sophie’s true nature begins to unravel, revealing a complex character with ulterior motives, ambition, and a desire for power.";
-    }
 
-    const characterSelection = document.getElementById("characterSelection");
-    const analysisParagraph = document.createElement("p");
-    analysisParagraph.textContent = analysis;
-    characterSelection.appendChild(analysisParagraph);
-}
-
-        function makeChoice(choice) {
-            const story = document.getElementById("story");
-            const characterStoryPoints = storyPoints.filter(point => point.character === characterSelect.value);
-            const result = characterStoryPoints[currentStoryPointIndex].choices.find(c => c.text === choice.text).result;
-            story.innerHTML += `<p>${result}</p>`;
-            currentStoryPointIndex++;
-            if (currentStoryPointIndex < characterStoryPoints.length) {
-                displayStoryPoint(characterStoryPoints[currentStoryPointIndex]);
+        function selectAnswer(character) {
+            quizAnswers.push(character);
+            currentQuestionIndex++;
+            if (currentQuestionIndex < questions.length) {
+                displayQuestion(currentQuestionIndex);
             } else {
-                story.innerHTML += "<p>Game Over</p>";
-                story.innerHTML += "<button onclick='goHome()'>Go Home</button>";
+                displayResult();
             }
         }
-        function selectBook(book) {
-    const characterSelect = document.getElementById("characterSelect");
-    if (book === "lotf") {
-        characterSelect.value = "jack";
-    } else if (book === "schoolforgoodandevil") {
-        document.getElementById("bookSelection").style.display = "none";
-        document.getElementById("characterSelection").style.display = "block";
-        document.getElementById("intro").style.display = "none";
 
-        const characterImages = document.createElement("div");
-        characterImages.classList.add("options");
-        characterImages.innerHTML = `
-            <div class="option" onclick="showCharacterAnalysis('agatha')">
-                <img src="agatha.jpeg" alt="Agatha">
-                <p>Click to view Agatha's analysis</p>
-            </div>
-            <div class="option" onclick="showCharacterAnalysis('sophie')">
-                <img src="sophie.jpeg" alt="Sophie">
-                <p>Click to view Sophie's analysis</p>
-            </div>
-        `;
-        document.getElementById("characterSelection").appendChild(characterImages);
-    }
-}
+        function displayResult() {
+            const result = quizAnswers.includes("sophie") ? "You are Sophie!" : "You are Agatha!";
+            const quizAnswersContainer = document.getElementById("quizAnswers");
+
+            quizAnswersContainer.innerHTML = result;
+
+            const characterSelection = document.getElementById("characterSelection");
+            const characterAnalysis = document.getElementById("characterAnalysis");
+
+            if (quizAnswers.includes("sophie")) {
+                characterSelection.style.display = "none";
+                characterAnalysis.style.display = "block";
+                document.getElementById("sophieAnalysis").style.display = "block";
+            } else {
+                characterSelection.style.display = "none";
+                characterAnalysis.style.display = "block";
+                document.getElementById("agathaAnalysis").style.display = "block";
+            }
+        }
 
         function goHome() {
             document.getElementById("characterSelection").style.display = "none";
@@ -270,6 +298,30 @@
             document.getElementById("intro").style.display = "block";
             const story = document.getElementById("story");
             story.innerHTML = "";
+            currentQuestionIndex = 0;
+            quizAnswers = [];
+        }
+
+        function selectBook(book) {
+            const characterSelection = document.getElementById("characterSelection");
+            if (book === "lotf") {
+                // Do something specific for Lord of the Flies
+            } else if (book === "schoolforgoodandevil") {
+                document.getElementById("bookSelection").style.display = "none";
+                characterSelection.style.display = "block";
+                document.getElementById("intro").style.display = "none";
+                startQuiz();
+            }
+        }
+
+        function showAnalysis(character) {
+            if (character === "sophie") {
+                document.getElementById("sophieAnalysis").style.display = "block";
+                document.getElementById("agathaAnalysis").style.display = "none";
+            } else {
+                document.getElementById("sophieAnalysis").style.display = "none";
+                document.getElementById("agathaAnalysis").style.display = "block";
+            }
         }
     </script>
 </body>
