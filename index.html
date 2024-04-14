@@ -172,7 +172,10 @@
                 <div class="characterImage" onclick="showAnalysis('sophie')"><img src="sophie.jpeg" alt="Sophie"></div>
                 <div class="characterImage" onclick="showAnalysis('agatha')"><img src="agatha.jpeg" alt="Agatha"></div>
             </div>
+            
         </div>
+            <button onclick="goHome()">Go Home</button>
+
     </div>
 
     <script>
@@ -293,14 +296,14 @@
         }
 
         function goHome() {
-            document.getElementById("characterSelection").style.display = "none";
-            document.getElementById("bookSelection").style.display = "block";
-            document.getElementById("intro").style.display = "block";
-            const story = document.getElementById("story");
-            story.innerHTML = "";
-            currentQuestionIndex = 0;
-            quizAnswers = [];
-        }
+    document.getElementById("characterSelection").style.display = "none";
+    document.getElementById("bookSelection").style.display = "block";
+    document.getElementById("intro").style.display = "block";
+    document.getElementById("sophieAnalysis").style.display = "none";
+    document.getElementById("agathaAnalysis").style.display = "none";
+    currentQuestionIndex = 0;
+    quizAnswers = [];
+}
 
         function selectBook(book) {
             const characterSelection = document.getElementById("characterSelection");
