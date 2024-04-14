@@ -76,13 +76,42 @@
         #characterSelection {
             display: none;
         }
+        .tabs {
+            background-color: #8b0000; /* New shade of red for the tabs */
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .tab {
+            display: inline-block;
+            color: white;
+            text-align: center;
+            padding: 14px 20px;
+            text-decoration: none;
+            font-size: 17px;
+            cursor: pointer;
+        }
+
+        .tab:hover {
+            background-color: #ff0000; /* Bright red hover */
+        }
+
+        .tab.active {
+            background-color: #ff0000; /* Bright red color for the active tab */
+        }
     </style>
 </head>
 <body>
     <header>
         <h1>Effects of Innate Savagery in Human Nature</h1>
+        <div class="tabs">
+            <a href="#" class="tab active" onclick="showContent('lotf')">LOTF</a>
+            <a href="#" class="tab" onclick="showContent('schoolforgoodandevil')">School for Good and Evil</a>
+            <a href="#" class="tab" onclick="showContent('demons')">Demons</a>
+            <a href="#" class="tab" onclick="showContent('conclusion')">Conclusion</a>
+        </div>
     </header>
-    <div class="container" id="intro">
+    <div id="intro" class="container">
         <h2>Introduction:</h2>
         <p>Are humans inherently inclined towards violence and destruction? Deep within us lies an innate urge within, a remnant of our primitive ancestry, waiting to be awakened. Innate savagery is the raw, untamed aspect of humanity, often concealed beneath a veil of civilization, social norms, and morality. It represents the instinctual drive for survival, an urge for dominance, and a capacity for violence that lurks within all of us, ready to pounce in times of crisis or chaos. The exploration of the effects of innate savagery on our actions reveal the importance of the social norms that keep humanity civilized. While the concept of innate savagery suggests that humans have a tendency to make morally unethical decisions, our individual choices and backgrounds also significantly influence our behavior. This nuanced relationship between social norms and primal instincts illustrates the complexity of human nature.</p>
     </div>
@@ -113,6 +142,25 @@
     </div>
 
     <script>
+        function showContent(tabName) {
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach(tab => {
+                tab.classList.remove('active');
+            });
+            const selectedTab = document.querySelector('.tab.' + tabName);
+            selectedTab.classList.add('active');
+
+            const content = document.getElementById('content');
+            if (tabName === 'lotf' || tabName === 'schoolforgoodandevil' || tabName === 'demons') {
+                document.getElementById('characterSelection').style.display = 'block';
+                content.innerHTML = ''; // Clear previous content
+            } else {
+                document.getElementById('characterSelection').style.display = 'none';
+                // Add content for Conclusion or other tabs if needed
+                content.innerHTML = ''; // Example: content.innerHTML = '<p>This is the conclusion.</p>';
+            }
+        }
+
         const storyPoints = [
             {
                 character: "jack",
