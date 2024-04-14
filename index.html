@@ -56,6 +56,19 @@
         #story {
             margin-top: 20px;
         }
+        .options {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .option {
+            flex-basis: 30%;
+            text-align: center;
+        }
+        .option img {
+            max-width: 100%;
+            height: auto;
+        }
     </style>
 </head>
 <body>
@@ -73,6 +86,26 @@
         <button onclick="startGame()">Start Game</button>
         <div id="story"></div>
     </div>
+
+    <div class="container">
+        <h1>Choose Your Story...</h1>
+        <div class="options">
+            <div class="option">
+                <h2>Lord of the Flies</h2>
+                <img src="lotf2.jpg" alt="Lord of the Flies">
+            </div>
+            <div class="option">
+                <h2>The School for Good and Evil</h2>
+                <img src="schoolforgoodandevil.jpg" alt="The School for Good and Evil">
+            </div>
+        </div>
+        <h3>OR</h3>
+        <div class="option">
+            <h3>Read about an example of innate savagery</h3>
+            <a href="https://www.youtube.com/watch?v=mWRsgZuwf_8"><img src="demons.jpg" alt="Demons by Imagine Dragons"></a>
+        </div>
+    </div>
+
     <script>
         const storyPoints = [
             {
