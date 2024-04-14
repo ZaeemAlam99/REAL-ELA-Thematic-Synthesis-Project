@@ -1,112 +1,130 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Innate Savagery Game</title>
-<style>
-    body {
-        font-family: Arial, sans-serif;
-        text-align: center;
-        background-color: black;
-        color: white;
-        margin: 0;
-        padding: 0;
-    }
-    .container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        flex-direction: column;
-    }
-    button {
-        padding: 10px 20px;
-        font-size: 18px;
-        background-color: white;
-        color: blue;
-        border: none;
-        cursor: pointer;
-    }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Innate Savagery Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #1a1a1a;
+            color: white;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+        h1 {
+            margin-top: 0;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 18px;
+            background-color: #3399ff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        button:hover {
+            background-color: #1a8cff;
+        }
+        select {
+            padding: 8px;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+        option {
+            font-size: 16px;
+        }
+        #story {
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
-<div class="container">
-    <h1>Innate Savagery Game</h1>
-    <p>Select a character:</p>
-    <select id="characterSelect">
-        <option value="jack">Jack (Lord of the Flies)</option>
-        <option value="agatha">Agatha (The School for Good and Evil)</option>
-        <option value="narrator">Narrator (Demons)</option>
-    </select>
-    <button onclick="startGame()">Start Game</button>
-    <div id="story"></div>
-</div>
-<script>
-    const storyPoints = [
-        {
-            character: "jack",
-            text: "You find yourself stranded on a deserted island with a group of other boys. What do you do?",
-            choices: [
-                { text: "Try to establish order and rules", result: "You manage to establish some semblance of order, but tensions rise as resources dwindle." },
-                { text: "Embrace your primal instincts and hunt for food", result: "You become consumed by the hunt, losing touch with your humanity." }
-            ]
-        },
-        {
-            character: "agatha",
-            text: "You are accepted into the School for Good and Evil. What path do you choose?",
-            choices: [
-                { text: "Pursue the path of Good and study hard", result: "You excel in your studies and become a shining example of Good." },
-                { text: "Embrace the allure of Evil and seek power", result: "You become consumed by your desire for power, losing sight of your original intentions." }
-            ]
-        },
-        {
-            character: "narrator",
-            text: "You are confronted by your inner demons. How do you respond?",
-            choices: [
-                { text: "Face your demons and seek redemption", result: "You confront your past and find peace within yourself." },
-                { text: "Embrace your demons and let them consume you", result: "Your inner demons take control, leading you down a path of destruction." }
-            ]
-        }
-    ];
+    <div class="container">
+        <h1>Innate Savagery Game</h1>
+        <p>Select a character:</p>
+        <select id="characterSelect">
+            <option value="jack">Jack (Lord of the Flies)</option>
+            <option value="agatha">Agatha (The School for Good and Evil)</option>
+            <option value="narrator">Narrator (Demons)</option>
+        </select>
+        <button onclick="startGame()">Start Game</button>
+        <div id="story"></div>
+    </div>
+    <script>
+        const storyPoints = [
+            {
+                character: "jack",
+                text: "You find yourself stranded on a deserted island with a group of other boys. What do you do?",
+                choices: [
+                    { text: "Try to establish order and rules", result: "You manage to establish some semblance of order, but tensions rise as resources dwindle." },
+                    { text: "Embrace your primal instincts and hunt for food", result: "You become consumed by the hunt, losing touch with your humanity." }
+                ]
+            },
+            {
+                character: "agatha",
+                text: "You are accepted into the School for Good and Evil. What path do you choose?",
+                choices: [
+                    { text: "Pursue the path of Good and study hard", result: "You excel in your studies and become a shining example of Good." },
+                    { text: "Embrace the allure of Evil and seek power", result: "You become consumed by your desire for power, losing sight of your original intentions." }
+                ]
+            },
+            {
+                character: "narrator",
+                text: "You are confronted by your inner demons. How do you respond?",
+                choices: [
+                    { text: "Face your demons and seek redemption", result: "You confront your past and find peace within yourself." },
+                    { text: "Embrace your demons and let them consume you", result: "Your inner demons take control, leading you down a path of destruction." }
+                ]
+            }
+        ];
 
-    let currentStoryPointIndex = -1;
+        let currentStoryPointIndex = -1;
 
-    function startGame() {
-        const characterSelect = document.getElementById("characterSelect");
-        const selectedCharacter = characterSelect.value;
+        function startGame() {
+            const characterSelect = document.getElementById("characterSelect");
+            const selectedCharacter = characterSelect.value;
 
-        const story = document.getElementById("story");
-        story.innerHTML = "";
+            const story = document.getElementById("story");
+            story.innerHTML = "";
 
-        const characterStoryPoints = storyPoints.filter(point => point.character === selectedCharacter);
-        currentStoryPointIndex = 0;
-        displayStoryPoint(characterStoryPoints[currentStoryPointIndex]);
-    }
-
-    function displayStoryPoint(point) {
-        const story = document.getElementById("story");
-        story.innerHTML = `<p>${point.text}</p>`;
-        point.choices.forEach(choice => {
-            const button = document.createElement("button");
-            button.textContent = choice.text;
-            button.onclick = () => makeChoice(choice);
-            story.appendChild(button);
-        });
-    }
-
-    function makeChoice(choice) {
-        const story = document.getElementById("story");
-        const characterStoryPoints = storyPoints.filter(point => point.character === characterSelect.value);
-        const result = characterStoryPoints[currentStoryPointIndex].choices.find(c => c.text === choice.text).result;
-        story.innerHTML += `<p>${result}</p>`;
-        currentStoryPointIndex++;
-        if (currentStoryPointIndex < characterStoryPoints.length) {
+            const characterStoryPoints = storyPoints.filter(point => point.character === selectedCharacter);
+            currentStoryPointIndex = 0;
             displayStoryPoint(characterStoryPoints[currentStoryPointIndex]);
-        } else {
-            story.innerHTML += "<p>Game Over</p>";
         }
-    }
-</script>
+
+        function displayStoryPoint(point) {
+            const story = document.getElementById("story");
+            story.innerHTML = `<p>${point.text}</p>`;
+            point.choices.forEach(choice => {
+                const button = document.createElement("button");
+                button.textContent = choice.text;
+                button.onclick = () => makeChoice(choice);
+                story.appendChild(button);
+            });
+        }
+
+        function makeChoice(choice) {
+            const story = document.getElementById("story");
+            const characterStoryPoints = storyPoints.filter(point => point.character === characterSelect.value);
+            const result = characterStoryPoints[currentStoryPointIndex].choices.find(c => c.text === choice.text).result;
+            story.innerHTML += `<p>${result}</p>`;
+            currentStoryPointIndex++;
+            if (currentStoryPointIndex < characterStoryPoints.length) {
+                displayStoryPoint(characterStoryPoints[currentStoryPointIndex]);
+            } else {
+                story.innerHTML += "<p>Game Over</p>";
+            }
+        }
+    </script>
 </body>
 </html>
