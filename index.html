@@ -212,6 +212,19 @@
                 story.appendChild(button);
             });
         }
+        function showCharacterAnalysis(character) {
+    let analysis = "";
+    if (character === "agatha") {
+        analysis = "In contrast to Sophie, Agatha’s character development in The School for Good and Evil reveals that looks can be deceiving when it comes to one’s inner evil. Despite her initial portrayal as the epitome of a princess, Sophie's actions gradually reveal her inner turmoil and capacity for manipulation. While she initially strives to prove her goodness through superficial acts of kindness, Sophie's descent into darkness becomes increasingly pronounced as she becomes consumed by jealousy and ambition.";
+    } else if (character === "sophie") {
+        analysis = "Throughout The School for Good and Evil, Sophie’s character development reveals that looks can be deceiving when it comes to one’s inner evil. From the start of the book, Sophie is depicted as the epitome of a princess. She is narcissistic about her appearance, longs for a fairy-tale ending, and does 'months of good deeds' solely to prove that she’s good. However, as the story progresses, Sophie’s true nature begins to unravel, revealing a complex character with ulterior motives, ambition, and a desire for power.";
+    }
+
+    const characterSelection = document.getElementById("characterSelection");
+    const analysisParagraph = document.createElement("p");
+    analysisParagraph.textContent = analysis;
+    characterSelection.appendChild(analysisParagraph);
+}
 
         function makeChoice(choice) {
             const story = document.getElementById("story");
@@ -226,18 +239,30 @@
                 story.innerHTML += "<button onclick='goHome()'>Go Home</button>";
             }
         }
-
         function selectBook(book) {
-            const characterSelect = document.getElementById("characterSelect");
-            if (book === "lotf") {
-                characterSelect.value = "jack";
-            } else if (book === "schoolforgoodandevil") {
-                characterSelect.value = "agatha";
-            }
-            document.getElementById("bookSelection").style.display = "none";
-            document.getElementById("characterSelection").style.display = "block";
-            document.getElementById("intro").style.display = "none";
-        }
+    const characterSelect = document.getElementById("characterSelect");
+    if (book === "lotf") {
+        characterSelect.value = "jack";
+    } else if (book === "schoolforgoodandevil") {
+        document.getElementById("bookSelection").style.display = "none";
+        document.getElementById("characterSelection").style.display = "block";
+        document.getElementById("intro").style.display = "none";
+
+        const characterImages = document.createElement("div");
+        characterImages.classList.add("options");
+        characterImages.innerHTML = `
+            <div class="option" onclick="showCharacterAnalysis('agatha')">
+                <img src="agatha.jpeg" alt="Agatha">
+                <p>Click to view Agatha's analysis</p>
+            </div>
+            <div class="option" onclick="showCharacterAnalysis('sophie')">
+                <img src="sophie.jpeg" alt="Sophie">
+                <p>Click to view Sophie's analysis</p>
+            </div>
+        `;
+        document.getElementById("characterSelection").appendChild(characterImages);
+    }
+}
 
         function goHome() {
             document.getElementById("characterSelection").style.display = "none";
